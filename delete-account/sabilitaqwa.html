@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hapus Akun Sabilitaqwa</title>
+</head>
+<body>
+    <h2>Hapus Akun Sabilitaqwa</h2>
+
+    <form id="deleteAccountForm">
+        <label for="whatsappNumber">Nomor Whatsapp Akun Anda:</label>
+        <input type="text" id="whatsappNumber" name="whatsappNumber" required>
+        <br>
+        <button type="button" id="deleteAccountButton">Hapus Akun</button>
+    </form>
+
+    <script>
+        document.getElementById('deleteAccountButton').addEventListener('click', function() {
+            const whatsappNumber = document.getElementById('whatsappNumber').value;
+            if (whatsappNumber) {
+                // Membuat permintaan HTTP DELETE ke alamat https://api.zcode.id/remove-account-sabilitaqwa
+                fetch('https://api.zcode.id/remove-account-sabilitaqwa', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ whatsappNumber })
+                })
+                .then(response => {
+                    if (response.status === 200) {
+                        alert('Akun berhasil dihapus.');
+                    } else {
+                        alert('Terjadi kesalahan saat menghapus akun.');
+                    }
+                })
+                .catch(error => {
+                    alert('Terjadi kesalahan dalam koneksi ke server.');
+                });
+            } else {
+                alert('Silakan masukkan nomor Whatsapp akun Anda.');
+            }
+        });
+    </script>
+</body>
+</html>
